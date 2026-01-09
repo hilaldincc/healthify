@@ -49,7 +49,7 @@ const Header = () => {
           <img src={logoIcon} alt="Logo" className={css.logoIcon} />
           <img
             src={logoText}
-            alt="SlimMom"
+            alt="healthify"
             className={`${css.logoText} ${
               !isLoggedIn ? css.logoTextSignedOut : ""
             }`}
