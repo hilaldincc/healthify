@@ -1,0 +1,421 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "SlimMom Diet App API",
+    "version": "1.0.0",
+    "description": "Backend API documentation for the SlimMom diet and calorie tracking application."
+  },
+  "servers": [
+    {
+      "url": "/api/v1"
+    }
+  ],
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Use Access Token in header: Authorization: Bearer <token>"
+      }
+    },
+    "schemas": {
+      "CalorieInput": {
+        "type": "object",
+        "required": [
+          "weight",
+          "height",
+          "age",
+          "activityLevel",
+          "targetWeight",
+          "bloodGroup"
+        ],
+        "properties": {
+          "weight": {
+            "type": "number",
+            "example": 75,
+            "description": "Current weight in kilograms."
+          },
+          "height": {
+            "type": "number",
+            "example": 180,
+            "description": "Height in centimeters."
+          },
+          "age": {
+            "type": "number",
+            "example": 30,
+            "description": "User age."
+          },
+          "activityLevel": {
+            "type": "number",
+            "example": 1.5,
+            "description": "Daily activity factor (Range: 1.2–1.9)."
+          },
+          "targetWeight": {
+            "type": "number",
+            "example": 65,
+            "description": "Goal weight in kilograms."
+          },
+          "bloodGroup": {
+            "type": "number",
+            "example": 2,
+            "description": "Blood group number (1–4)."
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "User authentication and session management."
+    },
+    {
+      "name": "Users",
+      "description": "Retrieve and update user profile information."
+    },
+    {
+      "name": "Calories",
+      "description": "Daily calorie intake calculation."
+    },
+    {
+      "name": "DayLog",
+      "description": "Daily food consumption logs (add, remove, summary)."
+    },
+    {
+      "name": "Products",
+      "description": "Search food products."
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "summary": "Register a New User",
+        "tags": ["Auth"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "password", "name"],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "newuser@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password",
+                    "example": "SecurePass123"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "John Doe"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "User successfully registered." },
+          "409": { "description": "Email already exists." }
+        }
+      }
+    },
+
+    "/auth/login": {
+      "post": {
+        "summary": "Login and Get Tokens",
+        "tags": ["Auth"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "test@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password",
+                    "example": "123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successful. Returns Access and Refresh tokens.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "accessToken": { "type": "string" },
+                    "refreshToken": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "401": { "description": "Invalid email or password." }
+        }
+      }
+    },
+
+    "/auth/logout": {
+      "post": {
+        "summary": "Log Out",
+        "tags": ["Auth"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["refreshToken"],
+                "properties": {
+                  "refreshToken": {
+                    "type": "string",
+                    "example": "eyJhbGc..."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": { "description": "Logout successful." },
+          "404": { "description": "Session not found." }
+        }
+      }
+    },
+
+    "/auth/refresh": {
+      "post": {
+        "summary": "Refresh Access Token",
+        "tags": ["Auth"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["refreshToken"],
+                "properties": {
+                  "refreshToken": {
+                    "type": "string",
+                    "example": "eyJhbGc..."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "New Access and Refresh token pair returned."
+          },
+          "401": { "description": "Invalid or expired Refresh Token." }
+        }
+      }
+    },
+
+    "/users/me": {
+      "get": {
+        "summary": "Get Current User Profile",
+        "tags": ["Users"],
+        "responses": {
+          "200": { "description": "Returns the user's profile data." }
+        }
+      }
+    },
+
+    "/users/update": {
+      "patch": {
+        "summary": "Update User Profile",
+        "tags": ["Users"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string", "example": "Jane Doe" },
+                  "weight": { "type": "number", "example": 70 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Profile updated successfully." }
+        }
+      }
+    },
+
+    "/calories/intake": {
+      "post": {
+        "summary": "Calculate Daily Calorie Needs (Public)",
+        "tags": ["Calories"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CalorieInput" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns calculated calorie intake and restricted food list."
+          }
+        }
+      }
+    },
+
+    "/calories/private-intake": {
+      "post": {
+        "summary": "Calculate and Save Daily Calorie Goal (Protected)",
+        "tags": ["Calories"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CalorieInput" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns calculated values and saves dailyCalorieGoal to profile."
+          }
+        }
+      }
+    },
+
+    "/day/add-product": {
+      "post": {
+        "summary": "Add Product to Daily Consumption",
+        "tags": ["DayLog"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["date", "productId", "weight"],
+                "properties": {
+                  "date": {
+                    "type": "string",
+                    "format": "date",
+                    "example": "2025-11-27"
+                  },
+                  "productId": {
+                    "type": "string",
+                    "example": "60c72b0f9f1b4c001f8e4d2a",
+                    "description": "Product ID."
+                  },
+                  "weight": {
+                    "type": "number",
+                    "example": 150,
+                    "description": "Consumed amount in grams."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Product added successfully. Returns updated daily record."
+          }
+        }
+      }
+    },
+
+    "/day/delete-product": {
+      "delete": {
+        "summary": "Delete Product from Daily Consumption",
+        "tags": ["DayLog"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["consumedProductId"],
+                "properties": {
+                  "consumedProductId": {
+                    "type": "string",
+                    "example": "60c72b0f9f1b4c001f8e4d2b",
+                    "description": "ID of consumed product record."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Product deleted and total calories updated."
+          }
+        }
+      }
+    },
+
+    "/day/info": {
+      "get": {
+        "summary": "Get Daily Summary",
+        "tags": ["DayLog"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "date",
+            "schema": { "type": "string", "format": "date" },
+            "description": "Date to fetch summary for (YYYY-MM-DD). Optional."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns daily calorie target, consumed calories, and remaining calories."
+          }
+        }
+      }
+    },
+
+    "/products/search": {
+      "get": {
+        "summary": "Search Products by Name",
+        "tags": ["Products"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "query",
+            "schema": { "type": "string", "required": true },
+            "description": "Product name to search (e.g., 'apple', 'milk')."
+          }
+        ],
+        "responses": {
+          "200": { "description": "Returns list of matching products." }
+        }
+      }
+    }
+  }
+}
