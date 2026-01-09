@@ -1,11 +1,10 @@
-
+import React from "react";
+import MainPage from "./pages/MainPage/MainPage.jsx";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Welcome to Healthifyy</h1>
-      </header>
+        <MainPage />
     </div>
   );
 }

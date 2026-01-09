@@ -1,0 +1,75 @@
+.loginWrapper {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-top: 60px;
+}
+
+.loginButtonWrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+@media (min-width: 768px) {
+  .loginContainer {
+    height: 100vh;
+    overflow: hidden;
+    background-image: url("../../../assets/img/tablet-auth-background1x.webp");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right;
+  }
+
+  @media (min-resolution: 2dppx) {
+    .loginContainer {
+      background-image: url("../../../assets/img/tablet-auth-background2x.webp");
+    }
+  }
+
+  .loginWrapper {
+    text-align: start;
+    margin-top: 160px;
+    width: 768px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 32px;
+  }
+
+  .loginButtonWrapper {
+    flex-direction: row;
+  }
+}
+
+@media (min-width: 1280px) {
+  .loginContainer {
+    background-image: url("../../../assets/img/desktop-background1x.webp");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right;
+  }
+
+  @media (min-resolution: 2dppx) {
+    .loginContainer {
+      background-image: url("../../../assets/img/desktop-background2x.webp");
+    }
+  }
+
+  .loginWrapper {
+    text-align: start;
+    margin-top: 240px;
+    width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 16px;
+  }
+}

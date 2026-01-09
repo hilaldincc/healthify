@@ -1,0 +1,59 @@
+.LandingPageWrapper {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.mainContent {
+  padding-top: 32px;
+  padding-left: 20px;
+  padding-right: 20px;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .mainContent {
+    padding-top: 100px;
+    padding-left: 32px;
+    padding-right: 32px;
+    max-width: 704px;
+    margin: 0 auto;
+  }
+  .LandingPageWrapper {
+    height: 100vh;
+    overflow-x: hidden;
+    background-image: url("../../assets/img/tablet-auth-background1x.webp");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right;
+  }
+
+  @media (min-resolution: 2dppx) {
+    .LandingPageWrapper {
+      background-image: url("../../assets/img/tablet-auth-background2x.webp");
+    }
+  }
+}
+@media (min-width: 1280px) {
+  .mainContent {
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 0;
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .LandingPageWrapper {
+    background-image: url("../../assets/img/desktop-background1x.webp");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right;
+  }
+
+  @media (min-resolution: 2dppx) {
+    .LandingPageWrapper {
+      background-image: url("../../assets/img/desktop-background2x.webp");
+    }
+  }
+}

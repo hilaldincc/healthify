@@ -1,0 +1,222 @@
+/* ============ MOBILE (default, <768px) ============ */
+
+.page {
+  width: 100%;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+}
+
+.inner {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.left {
+  width: 100%;
+  margin-top: 24px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 24px;
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.left form {
+  max-width: 320px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.right {
+  width: 100%;
+  margin-top: 32px;
+  background-color: #f5f6fb;
+  padding: 24px 16px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.summaryBox {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 12px;
+}
+
+.error {
+  margin-top: 16px;
+  color: #e53935;
+  font-size: 14px;
+}
+
+/* ============ TABLET 768–1279px ============ */
+@media (min-width: 768px) and (max-width: 1279px) {
+  .page {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #ffffff;
+  }
+
+  .inner {
+    max-width: 768px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .title {
+    font-size: 28px;
+    max-width: 640px;
+    margin: 0 auto 32px;
+    text-align: left;
+  }
+
+  .left {
+    width: 100%;
+  }
+
+  .left form {
+    max-width: 640px;
+  }
+
+  .right {
+    width: 100%;
+    margin-top: 40px;
+    padding: 28px 40px;
+    position: relative;
+    overflow: hidden;
+    background-color: #f5f6fb;
+    background-image: none !important;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .summaryBox {
+    width: 100%;
+    max-width: 520px;
+  }
+
+  .right::before {
+    content: "";
+    position: absolute;
+    right: -40px;
+    bottom: -160px;
+    width: 360px;
+    height: 520px;
+    background-image: url("../../assets/img/leaf-img1x.webp");
+    background-repeat: no-repeat;
+    background-size: contain;
+    transform: rotate(90deg);
+    pointer-events: none;
+  }
+}
+
+/* ============ DESKTOP >=1280px ============ */
+@media (min-width: 1280px) {
+  .page {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #ffffff;
+  }
+
+  .inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 80px 80px 0px 80px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 40px;
+  }
+
+  .left {
+    flex: 0 0 60%;
+    margin-top: 0;
+    padding: 0;
+  }
+
+  .title {
+    font-size: 32px;
+    margin-bottom: 32px;
+    max-width: 560px;
+    text-align: left;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .left form {
+    max-width: 560px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .right {
+    flex: 0 0 43.5%;
+    position: relative;
+    margin-top: -250px;
+    padding-top: 200px;
+    min-height: calc(100vh + 50px);
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: #f5f6fb;
+    background-image: url("../../assets/img/leaf-img2x.webp");
+    background-repeat: no-repeat;
+    background-position: 30% 50%;
+    background-size: 180% 105vh;
+  }
+
+  .summaryBox {
+    width: 420px;
+    border-radius: 12px;
+    padding: 32px 32px;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 767px) {
+  .page {
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .inner {
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .left {
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .right {
+    width: 100%;
+    max-width: 320px;
+    margin: 32px auto 0;
+  }
+
+  .summaryBox {
+    width: 100%;
+    max-width: 288px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
