@@ -1,0 +1,194 @@
+/* =====================================
+   BASE (Mobile first)
+===================================== */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.warning {
+  margin-top: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  line-height: 1.4;
+  color: #d9822b; /* turuncu warning rengi */
+  background: #fff7e6; /* açık sarı arka plan */
+  border: 1px solid #ffd591;
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+.warningIcon {
+  font-size: 12px;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.label {
+  display: block;
+  font-size: 14px;
+  color: #9b9faa;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 6px 0;
+  font-size: 16px;
+  outline: none;
+}
+
+.input:focus {
+  border-bottom-color: #fc842d;
+}
+
+select.input {
+  padding: 6px 0;
+}
+
+.error {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #e53935;
+}
+
+.radioGroup {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.radioLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.radioLabel input[type="radio"] {
+  appearance: auto !important;
+  -webkit-appearance: radio !important;
+  accent-color: #fc842d;
+  width: 16px;
+  height: 16px;
+}
+
+.button {
+  align-self: flex-start;
+  margin-top: 16px;
+  padding: 12px 32px;
+  border-radius: 30px;
+  border: none;
+  background-color: #fc842d;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+
+  box-shadow: 0px 8px 20px rgba(252, 132, 45, 0.45);
+  transition: 0.2s ease;
+}
+
+.button:hover {
+  opacity: 0.9;
+  box-shadow: 0px 10px 30px rgba(252, 132, 45, 0.65);
+  transform: translateY(-1px);
+}
+
+/* =====================================
+   TABLET (768–1279px)
+===================================== */
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .row {
+    flex-direction: row;
+    gap: 24px;
+  }
+
+  .field {
+    flex: 1;
+  }
+
+  .form {
+    max-width: 640px;
+  }
+
+  .input {
+    max-width: 220px;
+    font-size: 14px;
+  }
+
+  .fullWidth .input {
+    max-width: 260px;
+  }
+
+  .radioGroup {
+    gap: 12px;
+  }
+
+  .button {
+    margin-top: 24px;
+  }
+}
+
+/* =====================================
+   DESKTOP (>=1280px)
+===================================== */
+
+@media (min-width: 1280px) {
+  .row {
+    flex-direction: row;
+    gap: 32px;
+  }
+
+  .field {
+    flex: 1;
+  }
+
+  .form {
+    max-width: 480px;
+  }
+
+  .input {
+    max-width: 240px;
+  }
+
+  .fullWidth .input {
+    max-width: 300px;
+  }
+
+  .radioGroup {
+    gap: 12px;
+  }
+  .row {
+    margin-bottom: 20px;
+  }
+  .button {
+    margin-left: auto;
+    margin-top: 24px;
+    padding: 14px 40px;
+  }
+}
