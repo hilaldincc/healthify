@@ -1,6 +1,8 @@
 // src/components/CalculatorForm/CalculatorForm.jsx
 import React, { useState } from "react";
 import styles from "./CalculatorForm.module.css";
+import { useDispatch } from "react-redux";
+import { openModal } from "../../redux/modal/modalSlice";
 
 const initialState = {
   height: "",
@@ -46,6 +48,8 @@ const CalculatorForm = ({ onSubmit }) => {
     return Object.keys(newErrors).length === 0;
   };
 
+  const dispatch = useDispatch();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validate()) return;
@@ -58,6 +62,7 @@ const CalculatorForm = ({ onSubmit }) => {
       bloodType: Number(values.bloodType), // 1,2,3,4
       activityLevel: Number(values.activityLevel),
     });
+      dispatch(openModal());
   };
 
   // Ekranda gözüken etiketler ↔ backend value mapping’i
