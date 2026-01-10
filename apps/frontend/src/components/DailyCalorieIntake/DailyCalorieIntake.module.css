@@ -1,0 +1,102 @@
+.intakeTitle {
+  margin: 40px 20px 42px 20px;
+}
+
+.rateBox {
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 32px;
+  border-bottom: 1px solid #e0e0e0;
+  width: 100%;
+  justify-content: center;
+}
+
+.dailyRate {
+  color: var(--dark-gray);
+  line-height: 1;
+}
+
+.unit {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--dark-gray);
+  margin-left: 6px;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #e0e0e0;
+  margin: 20px 0;
+}
+
+.subtitle {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--dark-gray);
+  margin-bottom: 10px;
+}
+
+.foodList {
+  list-style-type: decimal;
+  list-style-position: outside;
+  padding-left: 20px;
+  margin-bottom: 40px;
+}
+
+.foodItem {
+  font-size: 14px;
+  color: var(--dark-gray);
+  line-height: 1.5;
+  margin-left: 5px;
+}
+
+.startButton {
+  border-radius: 30px;
+  padding: 13px 48px;
+  background: var(--orange);
+  color: var(--white);
+  border: none;
+  cursor: pointer;
+  width: fit-content;
+  margin: 0 auto 40px;
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .intakeTitle {
+    margin: 40px 40px 42px 40px;
+  }
+
+  .startButton {
+    margin: 0 auto 82px;
+  }
+
+  .divider {
+    margin-bottom: 12px;
+  }
+
+  .foodItem {
+    line-height: 2;
+  }
+}
+
+.page-title {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 140%;
+  color: var(--dark-gray);
+}
+
+@media (min-width: 768px) {
+  .page-title {
+    font-size: 34px;
+  }
+}
+
+.modal-calorie-text {
+  font-weight: 700;
+  font-size: 48px;
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: var(--steel-blue);
+}

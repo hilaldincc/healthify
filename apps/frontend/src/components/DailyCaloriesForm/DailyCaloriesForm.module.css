@@ -1,0 +1,103 @@
+.formContainer {
+  max-width: 320px;
+  padding-left: 20px;
+  padding-right: 20px;
+  overflow-x: hidden;
+  top: 147px;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inputLabel {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--light-gray);
+}
+
+.inputField {
+  border: none;
+  border-bottom: 1px solid #e0e0e0;
+  outline: none;
+  padding: 8px 0;
+  font-size: 14px;
+}
+
+.errorMessage {
+  color: #d8000c;
+  font-size: 12px;
+  margin: 0;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.radioOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.radioOption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.button {
+  border-radius: 30px;
+  padding: 13px 48px;
+  background: var(--orange);
+  color: var(--white);
+  border: none;
+  cursor: pointer;
+  width: fit-content;
+  align-self: center;
+}
+
+@media (min-width: 768px) {
+  .formContainer {
+    max-width: 520px;
+  }
+
+  .row {
+    flex-direction: row;
+    gap: 24px;
+  }
+
+  .inputGroup {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .inputField {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+.page-title {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 140%;
+  color: var(--dark-gray);
+}
+
+@media (min-width: 768px) {
+  :global(.page-title) {
+    font-size: 34px;
+  }
+}

@@ -1,0 +1,75 @@
+.card {
+  width: 100%;
+  background: #f0f1f3;
+  padding: 50px 16px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #000;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #000;
+}
+
+.food {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.foodTitle {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #000;
+}
+
+.foodText {
+  margin: 0;
+  font-size: 14px;
+  color: #9b9faa;
+}
+
+.foodList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.foodItem {
+  font-size: 14px;
+  color: #9b9faa;
+}
+
+@media (min-width: 1280px) {
+  .card {
+    padding: 50px 16px;
+  }
+}
