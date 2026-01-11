@@ -81,7 +81,7 @@ const LandingPage = () => {
     const API_URL = "https://healthifys-j4sf.onrender.com/api/v1/calories/intake";
 
     try {
-      const response = await axios.post(API_URL, requestBody);
+      const response = await axios.post( API_URL, requestBody);
 
       const { dailyRate, forbiddenFoods: allForbiddenFoodsFromApi } =
         response.data;
