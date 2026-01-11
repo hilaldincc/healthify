@@ -1,0 +1,100 @@
+/* Mobile + default */
+
+.card {
+  width: 100%;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 50px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+.summaryCol {
+  width: 100%;
+}
+
+.title {
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #9b9faa;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+.item span:last-child {
+  font-weight: 700;
+  color: #212121;
+}
+
+.foodCol {
+  width: 100%;
+}
+
+.foodTitle {
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.foodText {
+  font-size: 12px;
+  color: #9b9faa;
+}
+
+.foodList {
+  margin-top: 14px;
+  padding-left: 0;
+  list-style: none;
+  font-size: 12px;
+  color: #9b9faa;
+
+  margin-left: 4px;
+}
+
+.foodItem {
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+/* ---------- TABLET 768–1279px: YAN YANA ---------- */
+@media (min-width: 768px) and (max-width: 1279px) {
+  .card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 80px;
+    align-items: flex-start;
+    justify-items: center;
+  }
+}
+
+/* ---------- DESKTOP 1280+: ALT ALTA GÖRÜNÜM ---------- */
+@media (min-width: 1280px) {
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 50px;
+  }
+
+  .summaryCol,
+  .foodCol {
+    max-width: 450px;
+    width: 100%;
+  }
+}
