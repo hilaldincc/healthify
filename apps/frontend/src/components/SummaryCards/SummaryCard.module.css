@@ -1,75 +1,100 @@
+/* Mobile + default */
+
 .card {
   width: 100%;
-  background: #f0f1f3;
+  background: transparent !important;
+  box-shadow: none !important;
   padding: 50px 16px;
-  border-radius: 12px;
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 56px;
 }
 
-.summary {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+.summaryCol {
+  width: 100%;
 }
 
 .title {
-  margin: 0;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
-  color: #000;
+  margin-bottom: 20px;
 }
 
 .list {
   list-style: none;
   padding: 0;
   margin: 0;
-  display: grid;
-  gap: 12px;
 }
 
 .item {
   display: flex;
   justify-content: space-between;
-  font-size: 14px;
-  color: #000;
+  font-size: 12px;
+  color: #9b9faa;
+  margin-bottom: 12px;
+  line-height: 1.6;
 }
 
-.food {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+.item span:last-child {
+  font-weight: 700;
+  color: #212121;
+}
+
+.foodCol {
+  width: 100%;
 }
 
 .foodTitle {
-  margin: 0;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
-  color: #000;
+  margin-bottom: 14px;
 }
 
 .foodText {
-  margin: 0;
-  font-size: 14px;
+  font-size: 12px;
   color: #9b9faa;
 }
 
 .foodList {
+  margin-top: 14px;
+  padding-left: 0;
   list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  gap: 10px;
+  font-size: 12px;
+  color: #9b9faa;
+
+  margin-left: 4px;
 }
 
 .foodItem {
-  font-size: 14px;
-  color: #9b9faa;
+  margin-bottom: 10px;
+  line-height: 1.6;
 }
 
+/* ---------- TABLET 768–1279px: YAN YANA ---------- */
+@media (min-width: 768px) and (max-width: 1279px) {
+  .card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 80px;
+    align-items: flex-start;
+    justify-items: center;
+  }
+}
+
+/* ---------- DESKTOP 1280+: ALT ALTA GÖRÜNÜM ---------- */
 @media (min-width: 1280px) {
   .card {
-    padding: 50px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 50px;
+  }
+
+  .summaryCol,
+  .foodCol {
+    max-width: 450px;
+    width: 100%;
   }
 }

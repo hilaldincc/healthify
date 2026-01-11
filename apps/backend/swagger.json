@@ -1,9 +1,9 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "SlimMom Diet App API",
+    "title": "healthify Diet App API",
     "version": "1.0.0",
-    "description": "Backend API documentation for the SlimMom diet and calorie tracking application."
+    "description": "Backend API documentation for the healthify diet and calorie tracking application."
   },
   "servers": [
     {

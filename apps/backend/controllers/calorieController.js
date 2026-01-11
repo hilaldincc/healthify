@@ -1,57 +1,137 @@
-import CalorieProfile from "../models/CalorieProfile.js";
+import asyncHandler from "express-async-handler";
 import {
-  calculateDailyCalories,
-  getForbiddenFoods,
+  calculateDailyCalorieIntake,
+  getForbiddenProducts,
 } from "../services/calorieService.js";
+import User from "../models/User.js";
 
-export const publicCalorieIntake = async (req, res) => {
-  try {
-    const dailyRate = calculateDailyCalories(req.body);
-    const forbiddenFoods = await getForbiddenFoods(req.body.bloodType);
-
-    res.status(200).json({ dailyRate, forbiddenFoods });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-export const privateCalorieIntake = async (req, res) => {
-  try {
-    const dailyRate = calculateDailyCalories(req.body);
-    const forbiddenFoods = await getForbiddenFoods(req.body.bloodType);
-
-    const userId = req.user._id;
-
-    await CalorieProfile.findOneAndUpdate(
-      { owner: userId },
-      {
-        owner: userId,
-        dailyRate,
-        forbiddenFoods,
-      },
-      { new: true, upsert: true }
+// --- YARDIMCI FONKSİYON: Lojik Tekrarını Önler ---
+const getCalculationData = async (
+  weight,
+  height,
+  age,
+  activityLevel,
+  targetWeight,
+  bloodGroup
+) => {
+  // Gerekli tüm alanların kontrolü
+  if (
+    !weight ||
+    !height ||
+    !age ||
+    !activityLevel ||
+    !targetWeight ||
+    !bloodGroup
+  ) {
+    throw new Error(
+      "Missing required fields for calculation, including targetWeight and bloodGroup."
     );
-
-    res.status(200).json({ dailyRate, forbiddenFoods });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
   }
+
+  const dailyRate = calculateDailyCalorieIntake(
+    weight,
+    height,
+    age,
+    activityLevel,
+    targetWeight
+  );
+
+  const forbiddenFoods = await getForbiddenProducts(bloodGroup);
+
+  return { dailyRate, forbiddenFoods };
 };
 
-export const getUserCalorieProfile = async (req, res) => {
-  try {
-    const userId = req.user._id;
+// --- 5. Madde: HERKESE AÇIK Hesaplama Rotası ---
+const publicCalorieIntake = asyncHandler(async (req, res) => {
+  const { weight, height, age, activityLevel, targetWeight, bloodGroup } =
+    req.body;
 
-    const profile = await CalorieProfile.findOne({ owner: userId });
+  const { dailyRate, forbiddenFoods } = await getCalculationData(
+    weight,
+    height,
+    age,
+    activityLevel,
+    targetWeight,
+    bloodGroup
+  );
 
-    if (!profile) {
-      return res.status(404).json({
-        message: "No calorie profile found for this user",
-      });
-    }
+  res.status(200).json({
+    status: "success",
+    dailyRate,
+    forbiddenFoods,
+  });
+});
 
-    res.status(200).json(profile);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+// --- 6. Madde: ÖZEL (Korumalı) Hesaplama Rotası ---
+const privateCalorieIntake = asyncHandler(async (req, res) => {
+  const userId = req.user._id;
+
+  // Body'den veya veritabanından kan grubunu al
+  const user = await User.findById(userId).select("bloodGroup");
+  const bloodGroup = req.body.bloodGroup || user?.bloodGroup;
+
+  const { weight, height, age, activityLevel, targetWeight } = req.body;
+
+  const { dailyRate, forbiddenFoods } = await getCalculationData(
+    weight,
+    height,
+    age,
+    activityLevel,
+    targetWeight,
+    bloodGroup
+  );
+
+  // Hesaplanan hedefi ve tüm güncel verileri kullanıcı profiline kaydet
+  await User.findByIdAndUpdate(
+    userId,
+    {
+      $set: {
+        dailyCalorieGoal: dailyRate,
+        weight,
+        height,
+        age,
+        activityLevel,
+        targetWeight,
+        bloodGroup,
+      },
+    },
+    { new: true }
+  );
+
+  res.status(200).json({
+    status: "success",
+    dailyRate,
+    forbiddenFoods,
+    message: "Calorie goal saved to profile.",
+  });
+});
+
+// --- YENİ: Kullanıcının kendi kalori profilini dönen endpoint ---
+const getUserCalorieProfile = asyncHandler(async (req, res) => {
+  const userId = req.user._id;
+
+  const user = await User.findById(userId).select(
+    "dailyCalorieGoal weight height age activityLevel targetWeight bloodGroup"
+  );
+
+  if (!user) {
+    return res
+      .status(404)
+      .json({ status: "fail", message: "User not found for this token." });
   }
-};
+
+  return res.status(200).json({
+    status: "success",
+    dailyRate: user.dailyCalorieGoal,
+    profile: {
+      weight: user.weight,
+      height: user.height,
+      age: user.age,
+      activityLevel: user.activityLevel,
+      targetWeight: user.targetWeight,
+      bloodGroup: user.bloodGroup,
+    },
+  });
+});
+
+export { publicCalorieIntake, privateCalorieIntake, getUserCalorieProfile };

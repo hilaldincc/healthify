@@ -14,25 +14,27 @@
 .dailyRate {
   color: var(--dark-gray);
   line-height: 1;
+  margin-right: 5px;
 }
 
 .unit {
   font-size: 14px;
   font-weight: 700;
   color: var(--dark-gray);
-  margin-left: 6px;
+  padding-bottom: 4px;
 }
 
 .divider {
   border: none;
-  border-top: 1px solid #e0e0e0;
-  margin: 20px 0;
+  margin: 10px 0 20px 0;
+  width: 100%;
 }
 
 .subtitle {
-  font-weight: 700;
   font-size: 14px;
+  font-weight: 700;
   color: var(--dark-gray);
+  margin-top: 10px;
   margin-bottom: 10px;
 }
 
@@ -50,53 +52,84 @@
   margin-left: 5px;
 }
 
-.startButton {
-  border-radius: 30px;
-  padding: 13px 48px;
-  background: var(--orange);
-  color: var(--white);
-  border: none;
-  cursor: pointer;
-  width: fit-content;
-  margin: 0 auto 40px;
-  display: block;
+.noFoodItem {
+  font-size: 14px;
+  color: var(--light-gray);
+  list-style: none;
+  margin-left: 0;
+}
+
+.intakeButtonFix {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 210px;
+  padding: 10px 20px;
+  height: auto;
+  min-height: 43px;
 }
 
 @media (min-width: 768px) {
+  .intakeBody {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 450px;
+    max-width: none;
+    margin: auto;
+  }
   .intakeTitle {
-    margin: 40px 40px 42px 40px;
+    margin: 24px 20px 20px 20px;
+  }
+  .divider {
+    margin-bottom: 0px;
+  }
+  .subtitle {
+    align-self: center;
   }
 
-  .startButton {
+  .foodList {
+    list-style-position: outside;
+    padding-left: 32px;
+    text-align: left;
+    margin: 0 auto 40px;
+    width: fit-content;
+  }
+
+  .intakeButtonFix {
+    margin: 0 auto 80px;
+  }
+}
+@media (min-width: 1280px) {
+  .intakeBody {
+    width: 550px;
+    padding: 0;
+  }
+  .intakeTitle {
+    margin-top: 64px;
+  }
+  .subtitle {
+    align-self: center;
+    margin-bottom: 20px;
+  }
+
+  .foodList {
+    list-style-position: outside;
+    padding-left: 32px;
+    text-align: left;
+    margin: 0 auto 40px;
+    width: fit-content;
+  }
+
+  .intakeButtonFix {
     margin: 0 auto 82px;
   }
-
   .divider {
     margin-bottom: 12px;
   }
-
   .foodItem {
     line-height: 2;
   }
-}
-
-.page-title {
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 140%;
-  color: var(--dark-gray);
-}
-
-@media (min-width: 768px) {
-  .page-title {
-    font-size: 34px;
-  }
-}
-
-.modal-calorie-text {
-  font-weight: 700;
-  font-size: 48px;
-  letter-spacing: 0.04em;
-  text-align: center;
-  color: var(--steel-blue);
 }

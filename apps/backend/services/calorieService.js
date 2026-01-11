@@ -1,130 +1,62 @@
-import asyncHandler from "express-async-handler";
-import {
-  calculateDailyCalorieIntake,
-  getForbiddenProducts,
-} from "../services/calorieService.js";
-import User from "../models/User.js";
+import Product from "../models/Product.js";
 
-const getCalculationData = async (
+// Günlük Aktivite Çarpanları (Genel olarak kullanılan değerler)
+const activityFactors = {
+  sedentary: 1.2, // Hareketsiz
+  light: 1.375, // Hafif aktif
+  moderate: 1.55, // Orta aktif
+  veryActive: 1.725, // Çok aktif
+  extraActive: 1.9, // Ekstra aktif
+};
+
+/**
+ * Günlük kalori ihtiyacını (TDEE) hesaplar.
+ * Kadınlar için özel hedef odaklı formülü kullanır.
+ */
+function calculateDailyCalorieIntake(
   weight,
   height,
   age,
   activityLevel,
-  targetWeight,
-  bloodGroup
-) => {
-  if (
-    !weight ||
-    !height ||
-    !age ||
-    !activityLevel ||
-    !targetWeight ||
-    !bloodGroup
-  ) {
-    throw new Error(
-      "Missing required fields for calculation, including targetWeight and bloodGroup."
-    );
+  targetWeight
+) {
+  // Kadınlar için özel formül (her zaman uygulanacak)
+  const bmrAdjustment =
+    10 * weight + 6.25 * height - 5 * age - 161 - 10 * (weight - targetWeight);
+
+  const factor =
+    activityFactors[activityLevel] ||
+    Number(activityLevel) ||
+    activityFactors.sedentary;
+
+  const tdee = bmrAdjustment * factor;
+
+  return Math.round(Math.max(1000, tdee));
+}
+
+/**
+ * Kan Grubuna göre YASAKLANMIŞ ürünleri veritabanından bulur ve 5 tanesini RASTGELE seçer.
+ * @param {number} bloodGroup - Kullanıcının kan grubu (1, 2, 3, 4)
+ * @returns {Array} Yasaklanmış ürün başlıklarının listesi (Sadece rastgele 5 tanesi)
+ */
+async function getForbiddenProducts(bloodGroup) {
+  if (!bloodGroup || bloodGroup < 1 || bloodGroup > 4) {
+    return [];
   }
+  const matchQuery = {};
+  matchQuery[`groupBloodNotAllowed.${bloodGroup}`] = true;
 
-  const dailyRate = calculateDailyCalorieIntake(
-    weight,
-    height,
-    age,
-    activityLevel,
-    targetWeight
-  );
-
-  const forbiddenFoods = await getForbiddenProducts(bloodGroup);
-
-  return { dailyRate, forbiddenFoods };
-};
-
-const publicCalorieIntake = asyncHandler(async (req, res) => {
-  const { weight, height, age, activityLevel, targetWeight, bloodGroup } =
-    req.body;
-
-  const { dailyRate, forbiddenFoods } = await getCalculationData(
-    weight,
-    height,
-    age,
-    activityLevel,
-    targetWeight,
-    bloodGroup
-  );
-
-  res.status(200).json({
-    status: "success",
-    dailyRate,
-    forbiddenFoods,
-  });
-});
-
-const privateCalorieIntake = asyncHandler(async (req, res) => {
-  const userId = req.user._id;
-
-  const user = await User.findById(userId).select("bloodGroup");
-  const bloodGroup = req.body.bloodGroup || user?.bloodGroup;
-
-  const { weight, height, age, activityLevel, targetWeight } = req.body;
-
-  const { dailyRate, forbiddenFoods } = await getCalculationData(
-    weight,
-    height,
-    age,
-    activityLevel,
-    targetWeight,
-    bloodGroup
-  );
-
-  await User.findByIdAndUpdate(
-    userId,
-    {
-      $set: {
-        dailyCalorieGoal: dailyRate,
-        weight,
-        height,
-        age,
-        activityLevel,
-        targetWeight,
-        bloodGroup,
-      },
-    },
-    { new: true }
-  );
-
-  res.status(200).json({
-    status: "success",
-    dailyRate,
-    forbiddenFoods,
-    message: "Calorie goal saved to profile.",
-  });
-});
-
-const getUserCalorieProfile = asyncHandler(async (req, res) => {
-  const userId = req.user._id;
-
-  const user = await User.findById(userId).select(
-    "dailyCalorieGoal weight height age activityLevel targetWeight bloodGroup"
-  );
-
-  if (!user) {
-    return res
-      .status(404)
-      .json({ status: "fail", message: "User not found for this token." });
+  try {
+    const matched = await Product.aggregate([
+      { $match: matchQuery },
+      { $sample: { size: 5 } },
+      { $project: { title: 1, _id: 0 } },
+    ]);
+    return matched.map((item) => item.title);
+  } catch (error) {
+    console.error("Error fetching forbidden products:", error);
+    return [];
   }
+}
 
-  return res.status(200).json({
-    status: "success",
-    dailyRate: user.dailyCalorieGoal,
-    profile: {
-      weight: user.weight,
-      height: user.height,
-      age: user.age,
-      activityLevel: user.activityLevel,
-      targetWeight: user.targetWeight,
-      bloodGroup: user.bloodGroup,
-    },
-  });
-});
-
-export { publicCalorieIntake, privateCalorieIntake, getUserCalorieProfile };
+export { calculateDailyCalorieIntake, getForbiddenProducts };

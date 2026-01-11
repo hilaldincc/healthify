@@ -65,3 +65,131 @@ input {
   font-family: inherit;
   outline: none;
 }
+
+.header-text,
+input::placeholder,
+input[type="radio"]:checked + label,
+.highlight-label,
+.auth-title,
+.calculation-btn,
+.btn-primary,
+.btn-secondary,
+.btn-add-product {
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: var(--light-gray);
+}
+
+.page-title,
+.modal-title,
+.date-display,
+.navigation-text {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 140%;
+  color: var(--dark-gray);
+}
+
+.radio-btn-text,
+.detail-text,
+.product-detail-text {
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: var(--light-gray);
+}
+
+.header-text:hover,
+.header-text:focus,
+.header-text:active,
+.highlight-label {
+  color: var(--dark-gray);
+}
+
+.navigation-text {
+  color: var(--light-gray);
+}
+
+input[type="radio"]:checked + label,
+.auth-title {
+  color: var(--orange);
+}
+
+.calculation-btn {
+  border-radius: 30px;
+  padding: 13px 25px;
+  width: 210px;
+  height: 43px;
+  box-shadow: 0 4px 10px 0 var(--shadow-orange);
+  background: var(--orange);
+  color: var(--white);
+  border: none;
+}
+
+.modal-calorie-text {
+  font-weight: 700;
+  font-size: 48px;
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: var(--steel-blue);
+}
+
+.btn-primary {
+  border-radius: 30px;
+  padding: 13px 48px;
+  width: 181px;
+  height: 44px;
+  box-shadow: 0 4px 10px 0 var(--shadow-orange);
+  background: var(--orange);
+  color: var(--white);
+  border: none;
+}
+
+.btn-secondary {
+  border: 2px solid var(--orange);
+  border-radius: 30px;
+  padding: 13px 34px;
+  width: 181px;
+  height: 44px;
+  background: var(--white);
+  color: var(--orange);
+}
+
+.btn-add-product {
+  border-radius: 30px;
+  padding: 13px 46px;
+  width: 176px;
+  height: 44px;
+  box-shadow: 0 4px 10px 0 var(--shadow-orange);
+  background: var(--orange);
+  color: var(--white);
+}
+
+.btn-add-product-rounded {
+  width: 48px;
+  height: 48px;
+  border-radius: 100%;
+  background-color: var(--orange);
+  box-shadow: 0 4px 10px 0 var(--shadow-orange);
+}
+
+@media (min-width: 768px) {
+  .page-title,
+  .date-display {
+    font-size: 34px;
+  }
+
+  .modal-title {
+    font-size: 26px;
+  }
+
+  .navigation-text {
+    font-size: 24px;
+  }
+}
+@media (min-width: 1280px) {
+  .navigation-text {
+    font-size: 14px;
+  }
+}
