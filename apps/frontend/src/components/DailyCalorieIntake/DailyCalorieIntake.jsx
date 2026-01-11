@@ -1,24 +1,54 @@
 import React from 'react';
-import styles from './DailyCalorieIntake.module.css';
+import css from './DailyCalorieIntake.module.css';
+import {useNavigate} from 'react-router-dom';
 
-const DailyCalorieIntake = ({ calories, forbiddenFoods }) => {
-  return (
-    <div className={styles.container}>
-      <h2 className={styles.title}>Your recommended daily calorie intake is</h2>
-      <div className={styles.caloriesCount}>
-        {calories} <span className={styles.unit}>ккал</span>
-      </div>
-      <div className={styles.foodListContainer}>
-        <h3 className={styles.listTitle}>Foods you should not eat</h3>
-        <ol className={styles.list}>
-  {forbiddenFoods && forbiddenFoods.map((food, index) => (
-    <li key={index} className={styles.listItem}>{food}</li>
-  ))}
-</ol>
-      </div>
-      <button className={styles.button}>Start losing weight</button>
-    </div>
-  );
+const DailyCalorieIntake = ({ dailyRate, forbiddenFoods, onClose }) => {
+    const navigate = useNavigate();
+
+    const handleStartLosingWeight = () => {
+        if (onClose) {
+            onClose();
+        }
+        navigate('/login');
+    };
+
+    const hasForbiddenFoods = forbiddenFoods && forbiddenFoods.length > 0;
+
+    return (
+        <div className={css.intakeBody}> 
+
+            <h2 className={`page-title ${css.intakeTitle}`}>Your recommended daily calorie intake is</h2> 
+            
+            {/* Kalori Değeri Bölümü */}
+            <div className={css.rateBox}>
+                <span className={`modal-calorie-text ${css.dailyRate}`}>{dailyRate}</span>
+                <span className={css.unit}> kkal</span>
+            </div>
+            
+            <hr className={css.divider} />
+
+            {/* Yasaklı Yiyecekler Başlığı */}
+            <h3 className={css.subtitle}>Foods you should not eat</h3>
+            
+            {/* Yiyecek Listesi */}
+            <ol className={css.foodList}>
+                {hasForbiddenFoods ? (
+                    forbiddenFoods.map((food, index) => (
+                        <li key={index} className={css.foodItem}>{food}</li>
+                    ))
+                ) : (
+                    <li className={css.noFoodItem}>No forbidden foods for your blood type</li>
+                )}
+            </ol>
+
+            <button 
+                onClick={handleStartLosingWeight}
+                className={`calculation-btn ${css.intakeButtonFix}`}
+            >
+                Start losing weight
+            </button>
+        </div>
+    );
 };
 
 export default DailyCalorieIntake;
