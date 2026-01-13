@@ -34,25 +34,25 @@ const whitelist = [
   "https://wellnessworks.github.io/slimmoms",
 ];
 
-// app.use(
-//   cors({
-//     origin: (origin, callback) => {
-//       if (!origin) return callback(null, true); // Postman, SSR vb.
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true); // Postman, SSR vb.
 
-//       // Trailing slash sorununu engelle
-//       const cleanOrigin = origin.replace(/\/$/, "");
+      // Trailing slash sorununu engelle
+      const cleanOrigin = origin.replace(/\/$/, "");
 
-//       if (whitelist.includes(cleanOrigin)) {
-//         return callback(null, true);
-//       }
+      if (whitelist.includes(cleanOrigin)) {
+        return callback(null, true);
+      }
 
-//       return callback(new Error("CORS blocked: origin not allowed"), false);
-//     },
-//     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-//     allowedHeaders: ["Content-Type", "Authorization"],
-//     credentials: true,
-//   })
-// );
+      return callback(new Error("CORS blocked: origin not allowed"), false);
+    },
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
 app.use(
   cors({
     origin: "https://healthify-murex.vercel.app/",
