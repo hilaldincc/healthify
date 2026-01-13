@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const BASE_URL =
-  import.meta.env.VITE_BACKEND_URL ||
-  "http://https://healthify-ksuy.onrender.com/:5000";
+  import.meta.env.VITE_BACKEND_URL || "https://healthify-ksuy.onrender.com";
 
 export const userTransactionApi = axios.create({
   baseURL: BASE_URL,
