@@ -28,7 +28,7 @@ const app = express();
 // CORS Ayarları
 // Localhost için ve Vercel frontend için izin ver
 const whitelist = [
-  "https://healthify-frontend.vercel.app",
+  "https://healthify-murex.vercel.app/",
   "http://localhost:5173",
   "https://wellnessworks.github.io",
   "https://wellnessworks.github.io/slimmoms",
@@ -55,7 +55,7 @@ const whitelist = [
 // );
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://healthify-murex.vercel.app/",
     credentials: true,
   })
 );
