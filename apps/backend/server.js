@@ -8,7 +8,9 @@ import dotenv from "dotenv";
 // Rota Importları
 import authRouter from "./routes/api/v1/authRoutes.js";
 import userRoutes from "./routes/api/v1/userRoutes.js";
-
+import calorieRoutes from "./routes/api/v1/calorieRoutes.js";
+import productRoutes from "./routes/api/v1/productRoutes.js";
+import dayRoutes from "./routes/api/v1/dayRoutes.js";
 import specs from "./swagger.js";
 // Middleware Importları
 import { errorHandler } from "./middleware/errorMiddleware.js"; // Merkezi Hata İşleyiciler
@@ -29,25 +31,31 @@ const whitelist = [
   "https://healthify-frontend.vercel.app",
   "http://localhost:5173",
   "https://wellnessworks.github.io",
-  "https://wellnessworks.github.io/healthify-frontend",
+  "https://wellnessworks.github.io/slimmoms",
 ];
 
+// app.use(
+//   cors({
+//     origin: (origin, callback) => {
+//       if (!origin) return callback(null, true); // Postman, SSR vb.
+
+//       // Trailing slash sorununu engelle
+//       const cleanOrigin = origin.replace(/\/$/, "");
+
+//       if (whitelist.includes(cleanOrigin)) {
+//         return callback(null, true);
+//       }
+
+//       return callback(new Error("CORS blocked: origin not allowed"), false);
+//     },
+//     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+//     allowedHeaders: ["Content-Type", "Authorization"],
+//     credentials: true,
+//   })
+// );
 app.use(
   cors({
-    origin: (origin, callback) => {
-      if (!origin) return callback(null, true); // Postman, SSR vb.
-
-      // Trailing slash sorununu engelle
-      const cleanOrigin = origin.replace(/\/$/, "");
-
-      if (whitelist.includes(cleanOrigin)) {
-        return callback(null, true);
-      }
-
-      return callback(new Error("CORS blocked: origin not allowed"), false);
-    },
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    origin: "http://localhost:5173",
     credentials: true,
   })
 );
@@ -64,6 +72,9 @@ app.use("/api/v1/auth", authRouter);
 // 2. Kalan Rota Tanımlamaları
 // Bu rotaların hepsi /api/v1 altındadır.
 app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/calories", calorieRoutes);
+app.use("/api/v1/products", productRoutes);
+app.use("/api/v1/day", dayRoutes);
 
 // 3. Dokümantasyon Rotası
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));

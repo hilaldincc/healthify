@@ -47,6 +47,7 @@ const LandingPage = () => {
   const [errorMessage, setErrorMessage] = useState(null);
 
   const handleFormSubmit = async (formData) => {
+    console.log("Formdan gelen veri:", formData);
     setIsLoading(true);
     setErrorMessage(null);
 
@@ -78,7 +79,7 @@ const LandingPage = () => {
       bloodGroup: mappedBloodGroup,
       activityLevel: activityLevelMultiplier,
     };
-    const API_URL = "https://healthifys-j4sf.onrender.com/api/v1/calories/intake";
+    const API_URL = "http://localhost:5000/api/v1/calories/intake";
 
     try {
       const response = await axios.post( API_URL, requestBody);
