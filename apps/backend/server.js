@@ -30,6 +30,7 @@ const app = express();
 
 const whitelist = [
   "https://healthify-murex.vercel.app",
+  "https://healthify-ksuy.onrender.com",
   "http://localhost:5173",
 ];
 
