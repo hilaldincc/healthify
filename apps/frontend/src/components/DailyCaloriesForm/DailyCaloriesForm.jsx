@@ -175,7 +175,7 @@ const DailyCaloriesForm = ({ onFormSubmit, isLoading }) => {
       return;
     }
 
-    onFormSubmit(formData);
+    onFormSubmit({...formData});
 
     setFormData({
       height: "",
