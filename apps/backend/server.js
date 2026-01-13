@@ -31,7 +31,7 @@ const whitelist = [
   "https://healthify-frontend.vercel.app",
   "http://localhost:5173",
   "https://wellnessworks.github.io",
-  "https://wellnessworks.github.io/slimmoms",
+  "https://wellnessworks.github.io/healthify-frontend",
 ];
 
 app.use(
