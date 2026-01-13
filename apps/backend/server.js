@@ -27,38 +27,32 @@ const app = express();
 
 // CORS Ayarları
 // Localhost için ve Vercel frontend için izin ver
+
 const whitelist = [
-  "https://healthify-murex.vercel.app/",
+  "https://healthify-murex.vercel.app",
   "http://localhost:5173",
-  "https://wellnessworks.github.io",
-  "https://wellnessworks.github.io/slimmoms",
 ];
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin) return callback(null, true); // Postman, SSR vb.
+      if (!origin) return callback(null, true); // Postman, SSR
 
-      // Trailing slash sorununu engelle
-      const cleanOrigin = origin.replace(/\/$/, "");
-
-      if (whitelist.includes(cleanOrigin)) {
+      if (whitelist.includes(origin)) {
         return callback(null, true);
       }
 
-      return callback(new Error("CORS blocked: origin not allowed"), false);
+      console.log("CORS BLOCKED ORIGIN:", origin);
+      return callback(new Error("CORS not allowed"), false);
     },
+    credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
   })
 );
-app.use(
-  cors({
-    origin: "https://healthify-murex.vercel.app/",
-    credentials: true,
-  })
-);
+
+// 🔥 Preflight garantisi
+app.options("*", cors());
 
 app.use(express.json()); // JSON Body Parser
 app.use(cookieParser()); // Gelen isteklerdeki Cookie'leri parse etmek için
