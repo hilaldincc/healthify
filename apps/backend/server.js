@@ -8,7 +8,9 @@ import dotenv from "dotenv";
 // Rota Importları
 import authRouter from "./routes/api/v1/authRoutes.js";
 import userRoutes from "./routes/api/v1/userRoutes.js";
-
+import calorieRoutes from "./routes/api/v1/calorieRoutes.js";
+import productRoutes from "./routes/api/v1/productRoutes.js";
+import dayRoutes from "./routes/api/v1/dayRoutes.js";
 import specs from "./swagger.js";
 // Middleware Importları
 import { errorHandler } from "./middleware/errorMiddleware.js"; // Merkezi Hata İşleyiciler
@@ -64,6 +66,9 @@ app.use("/api/v1/auth", authRouter);
 // 2. Kalan Rota Tanımlamaları
 // Bu rotaların hepsi /api/v1 altındadır.
 app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/calories", calorieRoutes);
+app.use("/api/v1/products", productRoutes);
+app.use("/api/v1/day", dayRoutes);
 
 // 3. Dokümantasyon Rotası
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
